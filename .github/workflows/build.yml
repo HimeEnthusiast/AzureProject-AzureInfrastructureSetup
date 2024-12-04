@@ -10,19 +10,22 @@ jobs:
     runs-on: windows-latest
 
     steps:
-    - name: Run Powershell Script
+    - name: Run Powershell Script $ Log
     #   working-directory: .\AzureScripts
       shell: pwsh
       run: |
         echo Running File...
-        .\BicepScriptDeployment.ps1
-
-    - name: Collect Logs
-      id: log
-      run: |
+        # .\BicepScriptDeployment.ps1
         status=$(BicepScriptDeployment.ps1 > log.txt 2>&1; echo $?)
-          cat log.txt
-          echo ::set-output name=status::$status
+        cat log.txt
+        echo ::set-output name=status::$status
+
+    # - name: Collect Logs
+    #   id: log
+    #   run: |
+    #     status=$(BicepScriptDeployment.ps1 > log.txt 2>&1; echo $?)
+    #     cat log.txt
+    #     echo ::set-output name=status::$status
     - name: Commit Log
       run: |
           git config --global user.name 'himeenthusiast'
