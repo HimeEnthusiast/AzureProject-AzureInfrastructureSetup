@@ -1,0 +1,12 @@
+name: Build
+on: push
+
+jobs:
+  run_pwsh:
+    name: Run Powershell Script
+    runs-on: windows-latest
+
+    steps:
+    - name: Setup Azure Infrastructure
+      run: .\BicepScriptDeployment.ps1
+  
