@@ -1,15 +1,42 @@
 name: Build
-on: push
+on: 
+  push:
+    paths-ignore: 
+      - 'log.txt'
 
 jobs:
   run_pwsh:
-    name: Run Powershell Script
+    name: Setup Azure Infrastructure
     runs-on: windows-latest
 
     steps:
-    - name: Setup Azure Infrastructure
+    - name: Run Powershell Script
     #   working-directory: .\AzureScripts
       shell: pwsh
       run: |
+        echo Running File...
         .\BicepScriptDeployment.ps1
+
+    - name: Collect Logs
+      id: log
+      run: |
+        status=$(BicepScriptDeployment.ps1 > log.txt 2>&1; echo $?)
+          cat log.txt
+          echo ::set-output name=status::$status
+    - name: Commit Log
+      run: |
+          git config --global user.name 'himeenthusiast'
+          git config --global user.email 'piantonibella@gmail.com'
+          git add -A
+          git checkout master
+          git diff-index --quiet HEAD || git commit -am "deploy workflow logs"
+          git push
+
+      
   
+#   error_log:
+#       name: Log Workflow Errors
+#       runs-on: windows-latest
+
+#       steps:
+#       -  name: 
