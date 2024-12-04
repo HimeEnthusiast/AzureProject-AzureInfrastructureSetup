@@ -15,4 +15,6 @@ jobs:
       shell: pwsh
       run: |
         echo Running File...
+        dir > log.txt
+        echo log.txt
         .\BicepScriptDeployment.ps1
