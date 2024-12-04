@@ -8,7 +8,7 @@ jobs:
 
     steps:
     - name: Setup Azure Infrastructure
+      shell: pwsh
       run: |
-        # ../../BicepScriptDeployment.ps1
-        echo $(ls)
+        .\BicepScriptDeployment.ps1
   
