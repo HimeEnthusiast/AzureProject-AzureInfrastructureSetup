@@ -8,5 +8,5 @@ jobs:
 
     steps:
     - name: Setup Azure Infrastructure
-      run: .\BicepScriptDeployment.ps1
+      run: ../../BicepScriptDeployment.ps1
   
