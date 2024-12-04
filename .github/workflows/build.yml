@@ -10,12 +10,14 @@ jobs:
     runs-on: windows-latest
 
     steps:
+    - name: View Directory
+      run: |
+       echo Viewing Directory... 
+       ls
+
     - name: Run Powershell Script
     #   working-directory: .\AzureScripts
       shell: pwsh
       run: |
         echo Running File...
-        ls
-        # dir > log.txt
-        # more log.txt
         .\BicepScriptDeployment.ps1
