@@ -10,6 +10,7 @@ jobs:
     runs-on: windows-latest
 
     steps:
+    - uses: actions/checkout@v4
     - name: View Directory
       run: |
        echo Viewing Directory... 
