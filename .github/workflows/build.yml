@@ -8,7 +8,7 @@ jobs:
 
     steps:
     - name: Setup Azure Infrastructure
-      working-directory: ./AzureScripts
+      working-directory: AzureScripts
       shell: pwsh
       run: |
         .\BicepScriptDeployment.ps1
