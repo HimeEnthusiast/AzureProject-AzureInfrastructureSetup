@@ -11,13 +11,12 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    - name: View Directory
-      run: |
-       echo Viewing Directory... 
-       ls
+    - name: Login to Azure
+      uses: azure/login@v2
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
 
     - name: Run Powershell Script
-    #   working-directory: .\AzureScripts
       shell: pwsh
       run: |
         echo Running File...

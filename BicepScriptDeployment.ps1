@@ -2,7 +2,7 @@ $groupName = "RG_AzureBicepApplicationDeployment"
 $location = "CanadaCentral"
 $adminDbPass = "MeowMeowMeow123!!"
 
-az account set --subscription "Azure Subscription 1"
+az account set --subscription "BellaFirstSubscription"
 
 az deployment sub create `
 --location $location `
