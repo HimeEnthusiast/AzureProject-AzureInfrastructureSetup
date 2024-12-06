@@ -21,3 +21,7 @@ az deployment group create `
 --resource-group $groupName `
 --parameters privateEndpointIP='10.0.0.8' `
 --template-file .\PrivateEndpointCreation.bicep
+
+az deployment group create `
+--resource-group $groupName `
+--template-file .\CreateAppService.bicep
