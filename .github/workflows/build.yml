@@ -1,8 +1,6 @@
 name: Build
 on: 
   push:
-    paths-ignore: 
-      - 'log.txt'
 
 jobs:
   run_pwsh:
