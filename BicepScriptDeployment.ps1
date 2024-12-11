@@ -4,6 +4,7 @@ $adminDbPass = "MeowMeowMeow123!!"
 $subnetName = "mySubnet"
 $vnetName = 'VN_AzureBicepApplicationDeployment'
 $nsgName = "actions_NSG"
+$subscriptionId = "634787db-0332-4328-aa6d-ec43aed7e3c1"
 
 Write-Output Set account to BellaFirstSubscription
 az account set --subscription "BellaFirstSubscription"
@@ -49,8 +50,18 @@ az deployment group create `
 --resource-group $groupName `
 --template-file .\CreateAppService.bicep
 
-Write-Output Create private endpoint for app service
-az deployment group create `
+# Write-Output Create private endpoint for app service
+# az deployment group create `
+# --resource-group $groupName `
+# --parameters privateEndpointIP='10.0.0.9' `
+# --template-file .\AppPrivateEndpointCreation.bicep
+
+Write-Output Create network settings resource
+az resource create `
 --resource-group $groupName `
---parameters privateEndpointIP='10.0.0.9' `
---template-file .\AppPrivateEndpointCreation.bicep
+--name $nsgName `
+--resource-type GitHub.Network/networkSettings `
+--properties "{ \"location\": \"$location\", \"properties\" : { \"subnetId\": \"/subscriptions/$subscriptionId/resourceGroups/$groupName/providers/Microsoft.Network/virtualNetworks/$vnetName/subnets/$subnetName `
+--output table `
+--query "{GitHubId:tags.GitHubId, name:name}" `
+--api-version $API_VERSION
