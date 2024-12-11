@@ -7,7 +7,7 @@ param privateEndpointName string = 'PE_WebAppVirtualNetworkConnection'
 
 var webAppName = 'AzureDemoWebApplication'
 
-// var subnet1Prefix = '10.0.0.0/24'
+var subnet1Prefix = '10.0.0.0/24'
 var subnetName = 'SN_WebAppSubnet'
 
 // @description('SQL server name')
@@ -26,7 +26,12 @@ resource webApp 'Microsoft.Web/sites@2024-04-01' existing = {
 // }
 
 resource subnet 'Microsoft.Network/virtualNetworks/subnets@2021-05-01'  = {
-  name: subnetName
+    parent: vnet
+    name: subnetName
+    properties: {
+      addressPrefix: subnet1Prefix
+      privateEndpointNetworkPolicies: 'Disabled'
+    }
 }
 
 param privateEndpointIP string
