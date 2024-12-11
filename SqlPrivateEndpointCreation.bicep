@@ -6,7 +6,7 @@ param vnetName string = 'VN_AzureBicepApplicationDeployment'
 param privateEndpointName string = 'PE_SqlServerVirtualNetworkConnection'
 
 var subnet1Prefix = '10.0.0.0/24'
-var subnet1Name = 'mySubnet'
+var subnetName = 'SN_DatabaseSubnet'
 
 @description('SQL server name')
 param serverName string = 'sql1357924680'
@@ -21,7 +21,7 @@ resource sqlServer 'Microsoft.Sql/servers@2022-05-01-preview' existing = {
 
 resource subnet 'Microsoft.Network/virtualNetworks/subnets@2021-05-01' = {
   parent: vnet
-  name: subnet1Name
+  name: subnetName
   properties: {
     addressPrefix: subnet1Prefix
     privateEndpointNetworkPolicies: 'Disabled'
