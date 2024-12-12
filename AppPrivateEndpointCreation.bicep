@@ -5,7 +5,7 @@ param vnetName string = 'VN_AzureBicepApplicationDeployment'
 
 param privateEndpointName string = 'PE_WebAppVirtualNetworkConnection'
 
-var webAppName = 'AzureDemoWebApplication'
+var webAppName = 'wapp-AzureDemoWebApplication'
 
 var subnetPrefix = '10.0.1.0/24'
 var subnetName = 'SN_WebAppSubnet'
