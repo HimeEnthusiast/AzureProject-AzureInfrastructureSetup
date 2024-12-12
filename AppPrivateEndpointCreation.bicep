@@ -43,8 +43,8 @@ resource privateEndpoint 'Microsoft.Network/privateEndpoints@2024-05-01' = {
       {
         name: 'webAppIpConfig'
         properties: {
-          groupId: 'webApp'
-          memberName: 'webApp'
+          groupId: 'sites'
+          memberName: 'sites'
           privateIPAddress: privateEndpointIP
         }
       }
@@ -58,7 +58,7 @@ resource privateEndpoint 'Microsoft.Network/privateEndpoints@2024-05-01' = {
         properties: {
           privateLinkServiceId: webApp.id
           groupIds: [
-            'webApp'
+            'sites'
           ]
         }
       }
