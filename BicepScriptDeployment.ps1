@@ -34,7 +34,7 @@ az sql server firewall-rule create `
 # Write-Output Create private endpoint for SQL server
 # az deployment group create `
 # --resource-group $groupName `
-# --parameters privateEndpointIP='10.0.0.1' `
+# --parameters privateEndpointIP='10.0.0.8' `
 # --template-file .\SqlPrivateEndpointCreation.bicep
 
 # Write-Output Create app service for web app deployment
@@ -42,8 +42,8 @@ az sql server firewall-rule create `
 # --resource-group $groupName `
 # --template-file .\CreateAppService.bicep
 
-# Write-Output Create private endpoint for app service
-# az deployment group create `
-# --resource-group $groupName `
-# --parameters privateEndpointIP='10.0.1.1' `
-# --template-file .\AppPrivateEndpointCreation.bicep
+Write-Output Create private endpoint for app service
+az deployment group create `
+--resource-group $groupName `
+--parameters privateEndpointIP='10.0.1.9' `
+--template-file .\AppPrivateEndpointCreation.bicep
