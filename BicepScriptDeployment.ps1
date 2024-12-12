@@ -38,5 +38,5 @@ $vnetName = 'VN_AzureBicepApplicationDeployment'
 Write-Output Create private endpoint for app service
 az deployment group create `
 --resource-group $groupName `
---parameters privateEndpointIP='10.0.0.9' `
+--parameters privateEndpointIP='10.0.1.9' `
 --template-file .\AppPrivateEndpointCreation.bicep
