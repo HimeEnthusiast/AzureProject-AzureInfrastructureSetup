@@ -32,14 +32,14 @@ param privateEndpointIP string
 var privateEndpointNicName = 'AzureApplicationSqlNic'
 
 // Set up private endpoint for SQL Server
-resource privateEndpoint 'Microsoft.Network/privateEndpoints@2021-05-01' = {
+resource privateEndpoint 'Microsoft.Network/privateEndpoints@2024-05-01' = {
   name: privateEndpointName
   location: location
   properties: {
     customNetworkInterfaceName: privateEndpointNicName
     ipConfigurations: [
       {
-        name: 'ipConfig'
+        name: 'sqlServerIpConfig'
         properties: {
           groupId: 'sqlServer'
           memberName: 'sqlServer'

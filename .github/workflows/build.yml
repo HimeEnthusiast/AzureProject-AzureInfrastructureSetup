@@ -4,11 +4,11 @@ on:
 
 jobs:
   run_pwsh:
-    name: Setup Azure Infrastructure
+    name: Setup azure infrastructure
     runs-on: windows-latest
 
     steps:
-    - name: Checkout Repository
+    - name: Checkout repository
       uses: actions/checkout@v4
 
     - name: Login to Azure
@@ -16,7 +16,7 @@ jobs:
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-    - name: Run Powershell Script
+    - name: Run Powershell script
       shell: pwsh
       run: |
         echo Running File...
