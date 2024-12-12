@@ -31,7 +31,7 @@ resource subnet 'Microsoft.Network/virtualNetworks/subnets@2021-05-01'  = {
 }
 
 param privateEndpointIP string
-var privateEndpointNicName = 'AzureApplicationWebAppNic'
+var privateEndpointNicName = 'NI_AzureApplicationWebAppNic'
 
 // Set up private endpoint for Web App
 resource privateEndpoint 'Microsoft.Network/privateEndpoints@2024-05-01' = {

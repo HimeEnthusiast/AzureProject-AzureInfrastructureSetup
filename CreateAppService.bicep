@@ -24,14 +24,22 @@ resource appService 'Microsoft.Web/sites@2024-04-01' = {
   location: location
   properties: {
     serverFarmId: appServicePlan.id
+    httpsOnly: true
     siteConfig: {
       linuxFxVersion: linuxFxVersion
+      metadata: [
+        {
+          name: 'CURRENT_STACK'
+          value: 'node'
+        }
+      ]
     }
   }
 }
 
 resource srcControls 'Microsoft.Web/sites/sourcecontrols@2024-04-01' = {
-  name: '${appService.name}/web'
+  parent: appService
+  name: 'web'
   properties: {
     repoUrl: repositoryUrl
     branch: branch
