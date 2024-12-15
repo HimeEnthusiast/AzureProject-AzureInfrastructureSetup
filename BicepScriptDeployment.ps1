@@ -1,7 +1,6 @@
 $groupName = "RG_AzureBicepApplicationDeployment"
 $location = "CanadaCentral"
 $adminDbPass = "MeowMeowMeow123!!"
-$serverName = "sql1357924680"
 
 Write-Output Set account to BellaFirstSubscription
 az account set --subscription "BellaFirstSubscription"
@@ -21,15 +20,6 @@ az deployment group create `
 --resource-group $groupName `
 --parameters administratorLoginPassword=$adminDbPass `
 --template-file .\SqlDatabaseCreation.bicep
-
-# # Firewall #
-# Write-Output Create firewall rule
-# az sql server firewall-rule create `
-# --name AllowAll `
-# --resource-group $groupName `
-# --server $serverName `
-# --start-ip-address 0.0.0.0 `
-# --end-ip-address 255.255.255.255
 
 Write-Output Create private endpoint for SQL server
 az deployment group create `
