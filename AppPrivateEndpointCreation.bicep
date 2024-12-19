@@ -38,41 +38,41 @@ resource subnet 'Microsoft.Network/virtualNetworks/subnets@2021-05-01'  = {
     }
 }
 
-param privateEndpointIP string
-var privateEndpointNicName = 'NI_AzureApplicationWebAppNic'
+// param privateEndpointIP string
+// var privateEndpointNicName = 'NI_AzureApplicationWebAppNic'
 
 // Set up private endpoint for Web App
-resource privateEndpoint 'Microsoft.Network/privateEndpoints@2024-05-01' = {
-  name: privateEndpointName
-  location: location
-  properties: {
-    customNetworkInterfaceName: privateEndpointNicName
-    ipConfigurations: [
-      {
-        name: 'webAppIpConfig'
-        properties: {
-          groupId: 'sites'
-          memberName: 'sites'
-          privateIPAddress: privateEndpointIP
-        }
-      }
-    ]
-    subnet: {
-      id: subnet.id
-    }
-    privateLinkServiceConnections: [
-      {
-        name: privateEndpointName
-        properties: {
-          privateLinkServiceId: webApp.id
-          groupIds: [
-            'sites'
-          ]
-        }
-      }
-    ]
-  }
-  dependsOn: [
-    vnet
-  ]
-}
+// resource privateEndpoint 'Microsoft.Network/privateEndpoints@2024-05-01' = {
+//   name: privateEndpointName
+//   location: location
+//   properties: {
+//     customNetworkInterfaceName: privateEndpointNicName
+//     ipConfigurations: [
+//       {
+//         name: 'webAppIpConfig'
+//         properties: {
+//           groupId: 'sites'
+//           memberName: 'sites'
+//           privateIPAddress: privateEndpointIP
+//         }
+//       }
+//     ]
+//     subnet: {
+//       id: subnet.id
+//     }
+//     privateLinkServiceConnections: [
+//       {
+//         name: privateEndpointName
+//         properties: {
+//           privateLinkServiceId: webApp.id
+//           groupIds: [
+//             'sites'
+//           ]
+//         }
+//       }
+//     ]
+//   }
+//   dependsOn: [
+//     vnet
+//   ]
+// }
