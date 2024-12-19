@@ -27,6 +27,14 @@ resource subnet 'Microsoft.Network/virtualNetworks/subnets@2021-05-01'  = {
     properties: {
       addressPrefix: subnetPrefix
       privateEndpointNetworkPolicies: 'Disabled'
+      delegations: [
+        {
+          name: 'webAppsDelegation'
+          properties: {
+            serviceName: 'Microsoft.Web/serverFarms'
+          }
+        }
+      ]
     }
 }
 
