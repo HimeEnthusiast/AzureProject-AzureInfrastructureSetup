@@ -1,6 +1,9 @@
 name: Build
 on: 
-  push:
+    push:
+        branches:
+            - master
+    workflow_dispatch:
 
 jobs:
   run_pwsh:
