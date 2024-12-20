@@ -13,7 +13,6 @@ resource vnet 'Microsoft.Network/virtualNetworks@2024-05-01' existing = {
 }
 
 resource privateDnsZone 'Microsoft.Network/privateDnsZones@2024-06-01' = {
-  etag: 'None'
   location: location
   name: privateDnsZoneName
   properties: {}
