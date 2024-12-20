@@ -15,7 +15,13 @@ az deployment group create `
 --resource-group $groupName `
 --template-file .\VirtualNetworkCreation.bicep
 
-Write-Output Create SQL Server and Database
+Write-Output Set up private DNS zone
+az deployment group create `
+--resource-group $groupName `
+--parameters dbIpAddress='10.0.0.8' `
+--template-file .\PrivateDnsZoneCreation.bicep
+
+Write-Output Create SQL server and database
 az deployment group create `
 --resource-group $groupName `
 --parameters administratorLoginPassword=$adminDbPass `
