@@ -38,7 +38,7 @@ az deployment group create `
 # --resource-group $groupName `
 # --template-file .\CreateAppService.bicep
 
-Write-Output Create subnet for app service
-az deployment group create `
---resource-group $groupName `
---template-file .\AppPrivateEndpointCreation.bicep
+# Write-Output Create subnet for app service
+# az deployment group create `
+# --resource-group $groupName `
+# --template-file .\AppPrivateEndpointCreation.bicep

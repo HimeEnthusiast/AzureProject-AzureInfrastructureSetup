@@ -1,6 +1,6 @@
 param vnetName string = 'VN_AzureBicepApplicationDeployment'
 
-param location string = resourceGroup().location
+param location string = 'global'
 param privateDnsZoneName string = 'privatelink${environment().suffixes.sqlServerHostname}'
 
 param dnsZoneToVnetName string = 'link_to_vnet'
