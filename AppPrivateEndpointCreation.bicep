@@ -2,6 +2,7 @@ param vnetName string = 'VN_AzureBicepApplicationDeployment'
 var subnetPrefix = '10.0.1.0/24'
 var subnetName = 'SN_WebAppSubnet'
 var webAppName = 'AzureDemoWebApplication'
+var webSiteName = toLower('wapp-${webAppName}')
 
 resource vnet 'Microsoft.Network/virtualNetworks@2023-11-01' existing = {
   name: vnetName
@@ -25,7 +26,7 @@ resource subnet 'Microsoft.Network/virtualNetworks/subnets@2021-05-01'  = {
 }
 
 resource webApp 'Microsoft.Web/sites@2024-04-01' existing = {
-  name: webAppName
+  name: webSiteName
 }
 
 resource webAppNetworkConfig 'Microsoft.Web/sites/networkConfig@2024-04-01' = {
