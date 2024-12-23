@@ -6,6 +6,7 @@ param location string = resourceGroup().location // Location for all resources
 // param branch string = 'master'
 var appServicePlanName = toLower('AppServicePlan-${webAppName}')
 var webSiteName = toLower('wapp-${webAppName}')
+param dbServerName string = 'sql1357924680${environment().suffixes.sqlServerHostname}'
 
 @secure()
 param dbPass string
@@ -41,7 +42,7 @@ resource appService 'Microsoft.Web/sites@2024-04-01' = {
         }
         {
           name: 'DB_SERVER'
-          value: 'sql1357924680.database.windows.net'
+          value: dbServerName
         }
         {
           name: 'DB_USER'

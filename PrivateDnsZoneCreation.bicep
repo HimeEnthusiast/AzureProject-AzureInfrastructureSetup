@@ -44,21 +44,4 @@ resource dnsZoneToVnet 'Microsoft.Network/privateDnsZones/virtualNetworkLinks@20
   }
 }
 
-resource sqlPrivateEndpoint 'Microsoft.Network/privateEndpoints@2024-05-01' existing = {
-  name: privateEndpointName
-}
 
-resource privateEndpointDnsZoneGroup 'Microsoft.Network/privateEndpoints/privateDnsZoneGroups@2024-05-01' = {
-  name: 'sqlServerPrivateEndpointDnsZoneGroup'
-  parent: sqlPrivateEndpoint
-  properties: {
-    privateDnsZoneConfigs: [
-      {
-        name: 'privateEndpointPrivateGroupName'
-        properties: {
-          privateDnsZoneId: privateDnsZone.id
-        }
-      }
-    ]
-  }
-}

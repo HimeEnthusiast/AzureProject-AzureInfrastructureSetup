@@ -11,6 +11,8 @@ var subnetName = 'SN_DatabaseSubnet'
 @description('SQL server name')
 param serverName string = 'sql1357924680'
 
+param privateDnsZoneName string = 'privatelink${environment().suffixes.sqlServerHostname}'
+
 resource vnet 'Microsoft.Network/virtualNetworks@2023-11-01' existing = {
   name: vnetName
 }
@@ -30,6 +32,10 @@ resource subnet 'Microsoft.Network/virtualNetworks/subnets@2021-05-01' = {
 
 param privateEndpointIP string
 var privateEndpointNicName = 'NI_AzureApplicationSqlNic'
+
+resource privateDnsZone 'Microsoft.Network/privateDnsZones@2024-06-01' existing = {
+  name: privateDnsZoneName
+}
 
 // Set up private endpoint for SQL Server
 resource privateEndpoint 'Microsoft.Network/privateEndpoints@2024-05-01' = {
@@ -65,4 +71,18 @@ resource privateEndpoint 'Microsoft.Network/privateEndpoints@2024-05-01' = {
   dependsOn: [
     vnet
   ]
+
+  resource privateEndpointDnsZoneGroup 'privateDnsZoneGroups@2024-05-01' = {
+    name: 'sqlServerPrivateEndpointDnsZoneGroup'
+    properties: {
+      privateDnsZoneConfigs: [
+        {
+          name: 'privateEndpointPrivateGroupName'
+          properties: {
+            privateDnsZoneId: privateDnsZone.id
+          }
+        }
+      ]
+    }
+  }
 }
