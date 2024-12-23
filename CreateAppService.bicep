@@ -7,6 +7,9 @@ param location string = resourceGroup().location // Location for all resources
 var appServicePlanName = toLower('AppServicePlan-${webAppName}')
 var webSiteName = toLower('wapp-${webAppName}')
 
+@secure()
+param dbPass string
+
 resource appServicePlan 'Microsoft.Web/serverfarms@2024-04-01' = {
   name: appServicePlanName
   location: location
@@ -27,6 +30,28 @@ resource appService 'Microsoft.Web/sites@2024-04-01' = {
     publicNetworkAccess: 'Enabled'
     httpsOnly: true
     siteConfig: {
+      appSettings: [
+        {
+          name: 'DB_NAME'
+          value: 'DB_AzureBicepApplicationDevelopment'
+        }
+        {
+          name: 'DB_PASS'
+          value: dbPass
+        }
+        {
+          name: 'DB_SERVER'
+          value: 'sql1357924680.database.windows.net'
+        }
+        {
+          name: 'DB_USER'
+          value: 'user'
+        }
+        {
+          name: 'PORT'
+          value: '8080'
+        }
+      ]
       linuxFxVersion: linuxFxVersion
       metadata: [
         {

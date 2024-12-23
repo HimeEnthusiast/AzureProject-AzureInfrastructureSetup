@@ -8,6 +8,8 @@ param dnsZoneToVnetName string = 'link_to_vnet'
 param dbDnsRecordName string = 'sql1357924680${environment().suffixes.sqlServerHostname}'
 param dbIpAddress string
 
+param privateEndpointName string = 'PE_SqlServerVirtualNetworkConnection'
+
 resource vnet 'Microsoft.Network/virtualNetworks@2024-05-01' existing = {
   name: vnetName
 }
@@ -39,5 +41,24 @@ resource dnsZoneToVnet 'Microsoft.Network/privateDnsZones/virtualNetworkLinks@20
     virtualNetwork: {
       id: vnet.id
     }
+  }
+}
+
+resource sqlPrivateEndpoint 'Microsoft.Network/privateEndpoints@2024-05-01' existing = {
+  name: privateEndpointName
+}
+
+resource privateEndpointDnsZoneGroup 'Microsoft.Network/privateEndpoints/privateDnsZoneGroups@2024-05-01' = {
+  name: 'sqlServerPrivateEndpointDnsZoneGroup'
+  parent: sqlPrivateEndpoint
+  properties: {
+    privateDnsZoneConfigs: [
+      {
+        name: 'privateEndpointPrivateGroupName'
+        properties: {
+          privateDnsZoneId: privateDnsZone.id
+        }
+      }
+    ]
   }
 }

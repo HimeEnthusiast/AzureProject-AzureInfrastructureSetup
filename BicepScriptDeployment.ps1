@@ -3,6 +3,7 @@ $location = "CanadaCentral"
 $adminDbPass = "MeowMeowMeow123!!"
 $serverName = "sql1357924680"
 
+
 Write-Output Set account to BellaFirstSubscription
 az account set --subscription "BellaFirstSubscription"
 
@@ -37,6 +38,7 @@ az deployment group create `
 Write-Output Create app service for web app deployment
 az deployment group create `
 --resource-group $groupName `
+--parameters dbPass=$adminDbPass `
 --template-file .\CreateAppService.bicep
 
 Write-Output Create subnet for app service
