@@ -1,6 +1,7 @@
 param vnetName string = 'VN_AzureBicepApplicationDeployment'
 var subnetPrefix = '10.0.1.0/24'
 var subnetName = 'SN_WebAppSubnet'
+var webAppName = 'AzureDemoWebApplication'
 
 resource vnet 'Microsoft.Network/virtualNetworks@2023-11-01' existing = {
   name: vnetName
@@ -21,6 +22,18 @@ resource subnet 'Microsoft.Network/virtualNetworks/subnets@2021-05-01'  = {
         }
       ]
     }
+}
+
+resource webApp 'Microsoft.Web/sites@2024-04-01' existing = {
+  name: webAppName
+}
+
+resource webAppNetworkConfig 'Microsoft.Web/sites/networkConfig@2024-04-01' = {
+  parent: webApp
+  name: 'virtualNetwork'
+  properties: {
+    subnetResourceId: subnet.id
+  }
 }
 
 // param privateEndpointIP string

@@ -22,5 +22,4 @@ jobs:
     - name: Run Powershell script
       shell: pwsh
       run: |
-        echo Running File...
         .\BicepScriptDeployment.ps1
