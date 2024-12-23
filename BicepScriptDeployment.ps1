@@ -1,6 +1,7 @@
 $groupName = "RG_AzureBicepApplicationDeployment"
 $location = "CanadaCentral"
 $adminDbPass = "MeowMeowMeow123!!"
+$serverName = "sql1357924680"
 
 Write-Output Set account to BellaFirstSubscription
 az account set --subscription "BellaFirstSubscription"
