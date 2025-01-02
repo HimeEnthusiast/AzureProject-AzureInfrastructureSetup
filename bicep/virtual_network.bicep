@@ -1,7 +1,7 @@
 @description('Address Prefix')
 param addressPrefix string = '10.0.0.0/16'
 
-@description('Location')
+@description('Deployment Location')
 param deploymentLocation string = resourceGroup().location
 
 resource deploymentVirtualNetwork 'Microsoft.Network/virtualNetworks@2024-05-01' = {
@@ -47,3 +47,7 @@ resource databaseSubnet 'Microsoft.Network/virtualNetworks/subnets@2021-05-01'  
     ]
   }
 }
+
+output virtualNetworkName string = deploymentVirtualNetwork.name
+output databaseSubnetName string = databaseSubnet.name
+output webAppSubnetName string = webAppsSubnet.name

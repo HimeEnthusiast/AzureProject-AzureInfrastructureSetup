@@ -5,7 +5,7 @@ param virtualNetworkName string
 param deploymentLocation string
 
 @description('Database DNS Record')
-param databaseDnsRecord string
+param databaseServerHostName string
 
 @description('Database Static IP Address')
 param databaseStaticIpAddress string
@@ -20,7 +20,7 @@ resource databasePrivateDnsZone 'Microsoft.Network/privateDnsZones@2024-06-01' =
   properties: {}
 
   resource dbDnsRecord 'A' = {
-    name: databaseDnsRecord
+    name: '${databaseServerHostName}.${environment().suffixes.sqlServerHostname}'
     properties: {
       ttl: 3600
       aRecords: [ { ipv4Address: databaseStaticIpAddress } ]

@@ -1,10 +1,22 @@
 targetScope = 'resourceGroup'
 
-@description('Resour Group Name')
-param resourceGroupName string = resourceGroup().name
-
 @description('Location')
 param deploymentLocation string = resourceGroup().location
+
+@description('Database Server Host Name')
+param databaseServerHostName string
+
+@description('Database Name')
+param databaseName string
+
+@description('Database Server Admin Username')
+param databaseServerAdminUsername string
+
+@description('Database Server Admin Username')
+@secure()
+param databaseServerAdminPassword string
+
+var databaseServerPrivateIpAddress = '10.0.2.5'
 
 module virutalNetwork './virtual_network.bicep' = {
   name: 'virtualNetworkDeploy'
@@ -14,12 +26,36 @@ module virutalNetwork './virtual_network.bicep' = {
   }
 }
 
+module azureSql './database.bicep' = {
+  name: 'databaseDeploy'
+  params: {
+    serverHostName: databaseServerHostName
+    databaseName: databaseName
+    deploymentLocation: deploymentLocation
+    databaseServerAdminUsername: databaseServerAdminUsername
+    databaseServerAdminPassword: databaseServerAdminPassword
+    databaseSubnetName: virutalNetwork.outputs.databaseSubnetName
+    privateIpAddress: databaseServerPrivateIpAddress
+  }
+}
+
+module webApp './web_app.bicep' = {
+  name: 'webAppDeploy'
+  params: {
+    appServiceSku: 'B1'
+    deploymentLocation: deploymentLocation
+    databaseServerHost: ''
+    databaseName: ''
+    databaseServerPassword: ''
+  }
+}
+
 module privateDnsZones './private_dns.bicep' = {
   name: 'privateDnsZoneDeploy'
-  params {
-    virtualNetworkName: virutalNetwork.name
+  params: {
+    virtualNetworkName: virutalNetwork.outputs.virtualNetworkName
     deploymentLocation: deploymentLocation
-    databaseDnsRecord: 'mydbname.database.windows.net'
-    databaseStaticIpAddress: '10.0.2.5'
+    databaseServerHostName: databaseServerHostName
+    databaseStaticIpAddress: databaseServerPrivateIpAddress
   }
 }
