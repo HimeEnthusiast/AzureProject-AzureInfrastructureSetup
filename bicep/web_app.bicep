@@ -14,6 +14,9 @@ param databaseName string
 @secure()
 param databaseServerPassword string
 
+@description('Web App Subnet Id')
+param webAppSubnetId string
+
 resource appServicePlan 'Microsoft.Web/serverfarms@2024-04-01' = {
   name: 'asp-cacn-demo-app-dev'
   location: deploymentLocation
@@ -32,6 +35,7 @@ resource webApp 'Microsoft.Web/sites@2024-04-01' = {
   properties: {
     serverFarmId: appServicePlan.id
     publicNetworkAccess: 'Enabled'
+    virtualNetworkSubnetId: webAppSubnetId
     httpsOnly: true
     siteConfig: {
       appSettings: [

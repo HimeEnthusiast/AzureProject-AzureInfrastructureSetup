@@ -34,7 +34,7 @@ module azureSql './database.bicep' = {
     deploymentLocation: deploymentLocation
     databaseServerAdminUsername: databaseServerAdminUsername
     databaseServerAdminPassword: databaseServerAdminPassword
-    databaseSubnetName: virutalNetwork.outputs.databaseSubnetName
+    databaseSubnetId: virutalNetwork.outputs.databaseSubnetId
     privateIpAddress: databaseServerPrivateIpAddress
   }
 }
@@ -47,6 +47,7 @@ module webApp './web_app.bicep' = {
     databaseServerHost: ''
     databaseName: ''
     databaseServerPassword: ''
+    webAppSubnetId: virutalNetwork.outputs.webAppSubnetId
   }
 }
 

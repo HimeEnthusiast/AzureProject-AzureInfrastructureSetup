@@ -14,11 +14,14 @@ param databaseServerAdminUsername string
 @secure()
 param databaseServerAdminPassword string
 
-@description('Database Subnet Name')
-param databaseSubnetName string
+@description('Database Subnet Id')
+param databaseSubnetId string
 
 @description('Database Server Private IP Address')
 param privateIpAddress string
+
+var privateEndpointName = 'pe-${serverHostName}'
+var networkInterfaceCardName = 'nic-${serverHostName}'
 
 resource azureSqlServer 'Microsoft.Sql/servers@2022-05-01-preview' = {
   name: serverHostName
@@ -40,15 +43,11 @@ resource azureSqlDatabase 'Microsoft.Sql/servers/databases@2022-05-01-preview' =
   }
 }
 
-resource databaseSubnet 'Microsoft.Network/virtualNetworks/subnets@2021-05-01' existing = {
-  name: databaseSubnetName
-}
-
 resource privateEndpoint 'Microsoft.Network/privateEndpoints@2024-05-01' = {
-  name: 'pe-${serverHostName}'
+  name: privateEndpointName
   location: deploymentLocation
   properties: {
-    customNetworkInterfaceName: 'nic-${serverHostName}'
+    customNetworkInterfaceName: networkInterfaceCardName 
     ipConfigurations: [
       {
         name: 'sqlServerIpConfig'
@@ -59,20 +58,15 @@ resource privateEndpoint 'Microsoft.Network/privateEndpoints@2024-05-01' = {
         }
       }
     ]
-    subnet: {
-      id: databaseSubnet.id
-    }
+    subnet: { id: databaseSubnetId }
     privateLinkServiceConnections: [
       {
-        name: 'pe-${serverHostName}'
+        name: privateEndpointName
         properties: {
           privateLinkServiceId: azureSqlServer.id
-          groupIds: [
-            'sqlServer'
-          ]
+          groupIds: ['sqlServer']
         }
       }
     ]
   }
-  dependsOn: [ databaseSubnet ]
 }

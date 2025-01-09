@@ -15,12 +15,12 @@ resource deploymentVirtualNetwork 'Microsoft.Network/virtualNetworks@2024-05-01'
 }
 
 resource databasePrivateDnsZone 'Microsoft.Network/privateDnsZones@2024-06-01' = {
-  location: deploymentLocation
-  name: 'privatelink.${environment().suffixes.sqlServerHostname}'
+  location: 'global'
+  name: 'privatelink${environment().suffixes.sqlServerHostname}'
   properties: {}
 
   resource dbDnsRecord 'A' = {
-    name: '${databaseServerHostName}.${environment().suffixes.sqlServerHostname}'
+    name: '${databaseServerHostName}${environment().suffixes.sqlServerHostname}'
     properties: {
       ttl: 3600
       aRecords: [ { ipv4Address: databaseStaticIpAddress } ]
@@ -31,9 +31,10 @@ resource databasePrivateDnsZone 'Microsoft.Network/privateDnsZones@2024-06-01' =
 resource dnsZoneToVnet 'Microsoft.Network/privateDnsZones/virtualNetworkLinks@2024-06-01' = {
   parent: databasePrivateDnsZone
   name: 'database-dns-link'
-  location: deploymentLocation
+  location: 'global'
   properties: {
     registrationEnabled: false
     virtualNetwork: { id: deploymentVirtualNetwork.id }
   }
+  dependsOn: [ databasePrivateDnsZone ]
 }

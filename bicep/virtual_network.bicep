@@ -37,17 +37,12 @@ resource databaseSubnet 'Microsoft.Network/virtualNetworks/subnets@2021-05-01'  
   properties: {
     addressPrefix: '10.0.2.0/24'
     privateEndpointNetworkPolicies: 'Disabled'
-    delegations: [
-      {
-        name: 'webAppsDelegation'
-        properties: {
-          serviceName: 'Microsoft.Web/serverFarms'
-        }
-      }
-    ]
   }
 }
 
 output virtualNetworkName string = deploymentVirtualNetwork.name
 output databaseSubnetName string = databaseSubnet.name
 output webAppSubnetName string = webAppsSubnet.name
+
+output webAppSubnetId string = webAppsSubnet.id
+output databaseSubnetId string = databaseSubnet.id
