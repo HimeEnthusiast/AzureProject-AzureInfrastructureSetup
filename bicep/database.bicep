@@ -29,6 +29,8 @@ resource azureSqlServer 'Microsoft.Sql/servers@2022-05-01-preview' = {
   properties: {
     administratorLogin: databaseServerAdminUsername
     administratorLoginPassword: databaseServerAdminPassword
+    publicNetworkAccess: 'Disabled'
+    minimalTlsVersion: '1.3'
   }
 }
 
