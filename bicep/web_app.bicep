@@ -10,6 +10,9 @@ param databaseServerHost string
 @description('Database Name')
 param databaseName string
 
+@description('Database Server Username')
+param databaseServerUsername string
+
 @description('Database Server Password')
 @secure()
 param databaseServerPassword string
@@ -53,7 +56,7 @@ resource webApp 'Microsoft.Web/sites@2024-04-01' = {
         }
         {
           name: 'DB_USER'
-          value: 'user'
+          value: databaseServerUsername
         }
         {
           name: 'PORT'

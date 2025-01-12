@@ -44,9 +44,10 @@ module webApp './web_app.bicep' = {
   params: {
     appServiceSku: 'B1'
     deploymentLocation: deploymentLocation
-    databaseServerHost: ''
-    databaseName: ''
-    databaseServerPassword: ''
+    databaseServerHost: 'databaseServerHostName${environment().suffixes.sqlServerHostname}'
+    databaseName: databaseName
+    databaseServerUsername: databaseServerAdminUsername
+    databaseServerPassword: databaseServerAdminPassword
     webAppSubnetId: virutalNetwork.outputs.webAppSubnetId
   }
 }
